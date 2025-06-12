@@ -232,9 +232,7 @@ function RegGuideFAQ() {
             marginBottom: step < QUESTIONS.length ? 24 : 8,
             letterSpacing: 0.07
           }}>
-            {step < QUESTIONS.length
-              ? "Guided Question Flow"
-              : "Your Answers"}
+            Guided Question Flow
           </div>
           {/* Show progressive/horizontal questions, not stacked vertically like a form */}
           <div>
@@ -319,23 +317,7 @@ function RegGuideFAQ() {
                     </button>
                   ))}
                 </div>
-                {/* When all answered, show chosen answer without tick/checkmark */}
-                {step === QUESTIONS.length && answers[q.id] && (
-                  <div
-                    style={{
-                      marginTop: 9,
-                      fontSize: "1.07rem",
-                      color: "#28743f",
-                      background: "#eaf7ed",
-                      borderRadius: 7,
-                      padding: "6px 12px",
-                      display: "inline-block",
-                      fontWeight: 600
-                    }}
-                  >
-                    {q.options.find(opt => opt.value === answers[q.id]).label}
-                  </div>
-                )}
+                {/* Remove summary/tag of chosen answers below final flow as per user instructions */}
               </div>
             ))}
           </div>
