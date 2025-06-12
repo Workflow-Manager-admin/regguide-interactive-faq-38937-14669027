@@ -164,25 +164,27 @@ function RegGuideFAQ() {
           margin: "64px auto",
           background: "var(--secondary)",
           maxWidth: 480,
-          borderRadius: 14,
+          borderRadius: 18,
           boxShadow:
-            "0 2px 16px 0 rgba(26, 115, 232, 0.10), 0 1.5px 8px 0 rgba(60,64,67,0.04)",
-          padding: "32px 24px 28px 24px",
-          minHeight: 360
+            "0 4px 28px 0 rgba(26, 115, 232, 0.12), 0 2px 12px 0 rgba(60,64,67,0.05)",
+          padding: "40px 28px 32px 28px",
+          minHeight: 360,
+          border: "1.5px solid #e0e5eb"
         }}
       >
         <h2
           style={{
             color: "var(--primary)",
-            fontWeight: 700,
-            fontSize: "2rem",
-            marginBottom: 16,
-            letterSpacing: 0.2
+            fontWeight: 800,
+            fontSize: "2.3rem",
+            marginBottom: 14,
+            letterSpacing: 0.2,
+            textShadow: "0 1px 4px rgba(26,115,232,0.08)"
           }}
         >
           RegGuide Interactive FAQ
         </h2>
-        <div style={{ color: "#70757A", marginBottom: 24 }}>
+        <div style={{ color: "#244b66", marginBottom: 24, fontWeight: 500 }}>
           Guided business registration help—find exact requirements for your case.
         </div>
         {/* Question Flow */}
@@ -192,19 +194,25 @@ function RegGuideFAQ() {
               <div
                 key={q.id}
                 style={{
-                  marginBottom: 28,
+                  marginBottom: 30,
                   borderLeft: "4px solid var(--primary)",
                   paddingLeft: 18,
-                  background: idx === step ? "var(--secondary)" : "#fff",
-                  borderRadius: 6,
-                  transition: "background 0.2s"
+                  background: idx === step ? "var(--secondary)" : "#fbfcfd",
+                  borderRadius: 9,
+                  transition: "background 0.2s",
+                  border: idx === step ? "1.5px solid var(--primary)" : "1px solid #d7e3f6",
+                  boxShadow:
+                    idx === step
+                      ? "0 2px 8px 0 rgba(26, 115, 232, 0.07)"
+                      : "none"
                 }}
               >
                 <div
                   style={{
-                    fontWeight: 600,
-                    fontSize: "1.17rem",
-                    marginBottom: 12
+                    fontWeight: 700,
+                    fontSize: "1.18rem",
+                    marginBottom: 12,
+                    color: "#19457d"
                   }}
                 >
                   {q.question}
@@ -221,21 +229,29 @@ function RegGuideFAQ() {
                         background:
                           answers[q.id] === opt.value
                             ? "var(--primary)"
-                            : "#e0e9f9",
+                            : "#edf2fa",
                         color:
                           answers[q.id] === opt.value
                             ? "#fff"
-                            : "var(--primary)",
-                        padding: "8px 18px",
+                            : "#19457d",
+                        padding: "9px 22px",
                         marginRight: 16,
-                        border: "none",
-                        borderRadius: 6,
+                        marginBottom: 6,
+                        border: answers[q.id] === opt.value
+                          ? "2px solid #1763ca"
+                          : "1.5px solid #b1caee",
+                        borderRadius: 7,
+                        boxShadow: answers[q.id] === opt.value
+                          ? "0 0 0 1.5px #1A73E8"
+                          : undefined,
                         cursor:
                           answers[q.id] !== undefined || idx !== step
                             ? "not-allowed"
                             : "pointer",
-                        fontWeight: 500,
-                        transition: "all 0.18s"
+                        fontWeight: 600,
+                        fontSize: "1rem",
+                        opacity: answers[q.id] !== undefined && answers[q.id] !== opt.value ? 0.67 : 1,
+                        transition: "all 0.15s"
                       }}
                     >
                       {opt.label}
@@ -254,11 +270,12 @@ function RegGuideFAQ() {
                 {/* Dynamic FAQ Section */}
                 <h3
                   style={{
-                    fontWeight: 700,
+                    fontWeight: 800,
                     color: "var(--primary)",
-                    fontSize: "1.2rem",
-                    marginBottom: 10,
-                    marginTop: 16
+                    fontSize: "1.27rem",
+                    marginBottom: 12,
+                    marginTop: 20,
+                    letterSpacing: 0.05
                   }}
                 >
                   Frequently Asked for Your Registration
@@ -271,11 +288,12 @@ function RegGuideFAQ() {
                 {/* Document Checklist */}
                 <h3
                   style={{
-                    fontWeight: 700,
-                    color: "var(--primary)",
-                    fontSize: "1.07rem",
-                    marginTop: 32,
-                    marginBottom: 8
+                    fontWeight: 800,
+                    color: "#164995",
+                    fontSize: "1.13rem",
+                    marginTop: 38,
+                    marginBottom: 10,
+                    letterSpacing: 0.01
                   }}
                 >
                   Document Checklist
@@ -287,13 +305,15 @@ function RegGuideFAQ() {
                       style={{
                         display: "flex",
                         alignItems: "center",
-                        marginBottom: 7,
-                        fontSize: "1rem",
-                        gap: 10,
-                        listStyle: "none"
+                        marginBottom: 9,
+                        fontSize: "1.03rem",
+                        fontWeight: 500,
+                        gap: 12,
+                        listStyle: "none",
+                        color: "#214368"
                       }}
                     >
-                      <span role="img" aria-label="doc-icon">
+                      <span role="img" aria-label="doc-icon" style={{fontSize: "1.16em"}}>
                         {item.icon}
                       </span>
                       {item.label}
@@ -303,11 +323,12 @@ function RegGuideFAQ() {
                 {/* Issued Documents Summary */}
                 <h3
                   style={{
-                    fontWeight: 700,
+                    fontWeight: 800,
                     color: "var(--accent)",
-                    fontSize: "1.07rem",
-                    marginTop: 32,
-                    marginBottom: 8
+                    fontSize: "1.13rem",
+                    marginTop: 34,
+                    marginBottom: 10,
+                    letterSpacing: 0.01
                   }}
                 >
                   What You'll Get
@@ -319,13 +340,15 @@ function RegGuideFAQ() {
                       style={{
                         display: "flex",
                         alignItems: "center",
-                        marginBottom: 7,
-                        fontSize: "1rem",
-                        gap: 10,
-                        listStyle: "none"
+                        marginBottom: 9,
+                        fontSize: "1.025rem",
+                        fontWeight: 500,
+                        gap: 12,
+                        listStyle: "none",
+                        color: "#28743f"
                       }}
                     >
-                      <span role="img" aria-label="issued-doc">
+                      <span role="img" aria-label="issued-doc" style={{fontSize: "1.16em"}}>
                         {item.icon}
                       </span>
                       {item.label}
@@ -351,11 +374,22 @@ function RegGuideFAQ() {
                 </div>
               </div>
             ) : (
-              <div style={{ marginTop: 32, textAlign: "center" }}>
-                <div style={{ color: "#EF6C00", fontWeight: 500, marginBottom: 18 }}>
+              <div style={{ marginTop: 40, textAlign: "center" }}>
+                <div style={{ color: "#d45613", fontWeight: 600, marginBottom: 20, fontSize: "1.1rem" }}>
                   Sorry, we couldn't find a tailored FAQ for your scenario.
                 </div>
-                <button className="btn" onClick={handleRestart}>
+                <button
+                  className="btn"
+                  onClick={handleRestart}
+                  style={{
+                    background: "var(--primary)",
+                    color: "#fff",
+                    fontWeight: 700,
+                    padding: "12px 32px",
+                    borderRadius: 7,
+                    border: "none"
+                  }}
+                >
                   Choose Again
                 </button>
               </div>
@@ -379,12 +413,14 @@ function CollapsibleFAQItem({ q, a }) {
   return (
     <div
       style={{
-        background: "#fff",
-        borderRadius: 7,
-        marginBottom: 14,
-        boxShadow: "0 0.5px 3px 0 rgba(26, 115, 232, 0.04)",
-        border: "1px solid #e3e8f5",
-        padding: 0
+        background: open ? "#e8f0fe" : "#fff",
+        borderRadius: 8,
+        marginBottom: 16,
+        boxShadow: "0 1.5px 7px 0 rgba(26, 115, 232, 0.06)",
+        border: open
+          ? "1.7px solid var(--primary)"
+          : "1px solid #cddbef",
+        transition: "background 0.13s, border 0.13s"
       }}
     >
       <button
@@ -395,26 +431,39 @@ function CollapsibleFAQItem({ q, a }) {
           border: "none",
           width: "100%",
           textAlign: "left",
-          color: "var(--primary)",
+          color: "#17417c",
           fontWeight: 600,
-          fontSize: "1rem",
-          padding: "12px 18px",
+          fontSize: "1.03rem",
+          padding: open ? "13px 22px 8px 16px" : "12px 22px 12px 16px",
           cursor: "pointer",
           display: "flex",
           alignItems: "center",
-          gap: 8
+          gap: 9,
+          outline: "none",
+          borderRadius: 8
         }}
       >
-        {open ? "▼" : "▶"} {q}
+        <span
+          style={{
+            color: open ? "var(--primary)" : "#b5bfd0",
+            fontSize: "1.03em",
+            marginRight: 1
+          }}
+        >
+          {open ? "▼" : "▶"}
+        </span>
+        <span>{q}</span>
       </button>
       {open && (
         <div
           style={{
-            color: "#244b66",
-            background: "#f6f7fa",
-            borderTop: "1px solid #e3e8f5",
-            fontSize: "0.97rem",
-            padding: "12px 18px 15px 32px"
+            color: "#1f364d",
+            background: "#f5fafc",
+            borderTop: "1px solid #c5dbfa",
+            fontSize: "1.035rem",
+            lineHeight: 1.62,
+            padding: "11px 18px 15px 36px",
+            borderRadius: "0 0 8px 8px"
           }}
         >
           {a}
