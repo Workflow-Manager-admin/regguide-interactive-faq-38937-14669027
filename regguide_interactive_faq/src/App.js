@@ -21,9 +21,8 @@ function App() {
       </nav>
       {/* Render the RegGuide Interactive FAQ container */}
       <main>
-        <div className="container">
-          <RegGuideFAQ />
-        </div>
+        {/* Outer padding is on RegGuideFAQ; just render */}
+        <RegGuideFAQ />
       </main>
     </div>
   );

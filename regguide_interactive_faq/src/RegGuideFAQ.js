@@ -3,14 +3,20 @@ import React, { useState } from "react";
 // PUBLIC_INTERFACE
 function RegGuideFAQ() {
   /**
-   * RegGuideFAQ is the main container component for the RegGuide Interactive FAQ.
-   * It implements a guided, step-by-step FAQ for business/company registration,
-   * revealing answers and checklists tailored to user choices.
+   * RegGuideFAQ is the main container component for the Interactive FAQ.
+   * This redesign transforms it from a form-like flow into a welcoming, professional website experience
+   * with a rich header, clear sectioning, branding, and polished business-friendly styles.
    *
-   * Color Scheme: #1A73E8 (primary), #F1F3F4 (secondary), #34A853 (accent)
-   * Theme: Light, minimalist, ample white space, conversational step UI.
+   * Key features:
+   * - Prominent site header (via App.js layout)
+   * - Distinct content wrapper with light, bright, professional look
+   * - Sectioned content: Introduction, Guided Q&A, FAQ Answers, Checklist, Issued Docs
+   * - Brand colors: primary (#1A73E8), secondary (#F1F3F4), accent (#34A853)
+   * - Ample whitespace, rounded cards, no "form" or survey appearance
+   * - Friendly yet trustworthy design with wellness and clarity
    */
-  // Demo static data for questions, FAQ, documents (in real use, might be fetched from backend)
+
+  // Guided questions
   const QUESTIONS = [
     {
       id: "type",
@@ -40,7 +46,7 @@ function RegGuideFAQ() {
     }
   ];
 
-  // Example: Decision tree logic for FAQ and documents
+  // FAQ/Scenarios data
   const FAQ_DATA = {
     "company-local-trading": {
       faq: [
@@ -111,14 +117,13 @@ function RegGuideFAQ() {
         { label: "NGO Registration Certificate", icon: "📜" }
       ]
     }
-    // ... add more scenarios here as needed
+    // ... extend more as needed
   };
 
-  // State: answers for each question step, completion status
+  // State: track answers and progression
   const [answers, setAnswers] = useState({});
   const [step, setStep] = useState(0);
 
-  // Helper: handle answer selection
   function handleSelectAnswer(questionId, value) {
     const newAnswers = { ...answers, [questionId]: value };
     setAnswers(newAnswers);
@@ -127,13 +132,12 @@ function RegGuideFAQ() {
     }
   }
 
-  // Helper: reset all to start again
   function handleRestart() {
     setAnswers({});
     setStep(0);
   }
 
-  // Compose key for FAQ_DATA lookup based on all answered questions
+  // Derive scenario key for display
   function getScenarioKey() {
     if (
       answers.type &&
@@ -147,224 +151,317 @@ function RegGuideFAQ() {
   const scenarioKey = getScenarioKey();
   const scenarioContent = scenarioKey && FAQ_DATA[scenarioKey];
 
-  // UI Custom styles (as inline to match color requirements and theme if CSS not updated)
-  const styleVars = {
-    "--primary": "#1A73E8",
-    "--secondary": "#F1F3F4",
-    "--accent": "#34A853"
-  };
-
-  // PUBLIC_INTERFACE
+  // Layout main content wrapper and styles
   return (
-    <div className="regguide-faq-root" style={styleVars}>
-      {/* Main centered card/modal */}
-      <div
-        className="regguide-faq-card"
+    <div className="regguide-website" style={{
+      background: "var(--secondary)",
+      minHeight: "calc(100vh - 72px)",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      paddingTop: 56,
+      paddingBottom: 60
+    }}>
+      {/* Hero Intro Section */}
+      <section
+        className="regguide-hero"
         style={{
-          margin: "64px auto",
-          background: "var(--secondary)",
-          maxWidth: 480,
-          borderRadius: 18,
-          boxShadow:
-            "0 4px 28px 0 rgba(26, 115, 232, 0.12), 0 2px 12px 0 rgba(60,64,67,0.05)",
-          padding: "40px 28px 32px 28px",
-          minHeight: 360,
-          border: "1.5px solid #e0e5eb"
+          width: "100%",
+          background: "linear-gradient(90deg, #f8fafc 60%, #eaf4ff 100%)",
+          borderRadius: "1.5rem",
+          boxShadow: "0 3px 24px rgba(26,115,232,0.08)",
+          padding: "44px 0 32px 0",
+          maxWidth: 950,
+          margin: "0 auto 30px auto",
         }}
       >
-        <h2
-          style={{
-            color: "var(--primary)",
+        <div className="regguide-hero-contain" style={{textAlign: "center", width: "90%", margin: "0 auto"}}>
+          <div style={{
             fontWeight: 800,
-            fontSize: "2.3rem",
-            marginBottom: 14,
-            letterSpacing: 0.2,
-            textShadow: "0 1px 4px rgba(26,115,232,0.08)"
+            color: "var(--primary)",
+            fontSize: "2.1rem",
+            letterSpacing: 0.03,
+          }}>
+            RegGuide Interactive Registration FAQ
+          </div>
+          <div style={{
+            fontSize: "1.18rem",
+            marginTop: 10,
+            color: "#2365A2",
+            maxWidth: 500,
+            marginLeft: "auto",
+            marginRight: "auto",
+            fontWeight: 400,
+            textShadow: "0 1px 6px rgba(38,132,223,0.03)"
+          }}>
+            Friendly, step-by-step guidance to help you successfully register your business or organization—see FAQs, documents,
+            and requirements in one place for your unique case.
+          </div>
+        </div>
+      </section>
+
+      {/* Main Q&A and Results Flow */}
+      <main style={{
+        width: "100%",
+        maxWidth: 950,
+        background: "#fff",
+        boxShadow: "0 3px 18px rgba(60,130,200,0.11)",
+        borderRadius: "1.5rem",
+        minHeight: 470,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        padding: "42px 22px 36px 22px"
+      }}>
+        {/* Section: Guided Q&A */}
+        <section
+          style={{
+            width: "100%",
+            maxWidth: 540,
+            margin: "0 auto",
+            marginBottom: step === QUESTIONS.length ? 38 : 18,
+            paddingBottom: step < QUESTIONS.length ? 16 : 0,
+            borderBottom: step === QUESTIONS.length ? "1.6px solid #e7eef7" : "none",
+            transition: "border 0.25s"
           }}
         >
-          RegGuide Interactive FAQ
-        </h2>
-        <div style={{ color: "#244b66", marginBottom: 24, fontWeight: 500 }}>
-          Guided business registration help—find exact requirements for your case.
-        </div>
-        {/* Question Flow */}
-        {step < QUESTIONS.length && (
+          <div style={{
+            fontSize: "1.16rem",
+            color: "#19457d",
+            fontWeight: 700,
+            marginBottom: step < QUESTIONS.length ? 24 : 8,
+            letterSpacing: 0.07
+          }}>
+            {step < QUESTIONS.length
+              ? "Guided Question Flow"
+              : "Your Answers"}
+          </div>
+          {/* Show progressive/horizontal questions, not stacked vertically like a form */}
           <div>
             {QUESTIONS.slice(0, step + 1).map((q, idx) => (
               <div
                 key={q.id}
                 style={{
-                  marginBottom: 30,
-                  borderLeft: "4px solid var(--primary)",
-                  paddingLeft: 18,
-                  background: idx === step ? "var(--secondary)" : "#fbfcfd",
-                  borderRadius: 9,
-                  transition: "background 0.2s",
-                  border: idx === step ? "1.5px solid var(--primary)" : "1px solid #d7e3f6",
-                  boxShadow:
-                    idx === step
-                      ? "0 2px 8px 0 rgba(26, 115, 232, 0.07)"
-                      : "none"
+                  background: idx === step && step !== QUESTIONS.length ? "#f4f8fb" : "#fcfdff",
+                  marginBottom: 28,
+                  padding: "16px 22px",
+                  borderRadius: 14,
+                  border: idx === step && step !== QUESTIONS.length
+                    ? "2px solid var(--primary)"
+                    : "1.25px solid #d7e3f6",
+                  boxShadow: idx === step
+                    ? "0 2px 10px 0 rgba(26, 115, 232, 0.055)"
+                    : "none",
+                  position: "relative"
                 }}
               >
                 <div
                   style={{
                     fontWeight: 700,
-                    fontSize: "1.18rem",
-                    marginBottom: 12,
-                    color: "#19457d"
+                    fontSize: "1.13rem",
+                    color: "#19457d",
+                    marginBottom: 13,
                   }}
                 >
+                  <span style={{
+                    fontWeight: 900,
+                    color: "#1b5acc",
+                    background: "#e9f2fa",
+                    borderRadius: "50%",
+                    fontSize: "1.04em",
+                    padding: "3px 11px",
+                    marginRight: 10,
+                  }}>{idx + 1}</span>
                   {q.question}
                 </div>
-                <div>
+                <div style={{ display: "flex", gap: 14 }}>
                   {q.options.map(opt => (
                     <button
                       key={opt.value}
+                      className="regguide-choice-btn"
                       onClick={() => handleSelectAnswer(q.id, opt.value)}
                       disabled={
-                        answers[q.id] !== undefined || idx !== step
+                        answers[q.id] !== undefined ||
+                        idx !== step
                       }
                       style={{
                         background:
                           answers[q.id] === opt.value
                             ? "var(--primary)"
-                            : "#edf2fa",
+                            : "#f6faff",
                         color:
                           answers[q.id] === opt.value
                             ? "#fff"
-                            : "#19457d",
-                        padding: "9px 22px",
-                        marginRight: 16,
-                        marginBottom: 6,
+                            : "#164060",
                         border: answers[q.id] === opt.value
                           ? "2px solid #1763ca"
-                          : "1.5px solid #b1caee",
-                        borderRadius: 7,
+                          : "1.5px solid #bbe5ff",
+                        borderRadius: 10,
+                        fontWeight: 600,
+                        fontSize: "1.04rem",
+                        padding: "10px 26px",
                         boxShadow: answers[q.id] === opt.value
-                          ? "0 0 0 1.5px #1A73E8"
+                          ? "0 0 0 2.5px #1A73E8"
                           : undefined,
                         cursor:
                           answers[q.id] !== undefined || idx !== step
                             ? "not-allowed"
                             : "pointer",
-                        fontWeight: 600,
-                        fontSize: "1rem",
-                        opacity: answers[q.id] !== undefined && answers[q.id] !== opt.value ? 0.67 : 1,
-                        transition: "all 0.15s"
+                        opacity:
+                          answers[q.id] !== undefined &&
+                          answers[q.id] !== opt.value
+                            ? 0.55
+                            : 1,
+                        transition: "all 0.14s"
                       }}
                     >
                       {opt.label}
                     </button>
                   ))}
                 </div>
+                {/* When all answered, show chosen answer without extra UI */}
+                {step === QUESTIONS.length && answers[q.id] && (
+                  <div
+                    style={{
+                      marginTop: 9,
+                      fontSize: "1.07rem",
+                      color: "#28743f",
+                      background: "#eaf7ed",
+                      borderRadius: 7,
+                      padding: "6px 12px",
+                      display: "inline-block"
+                    }}
+                  >
+                    <span style={{
+                      marginRight: 8,
+                      fontWeight: 600,
+                      fontSize: "1.04em",
+                    }}>
+                      ✓
+                    </span>
+                    {q.options.find(opt => opt.value === answers[q.id]).label}
+                  </div>
+                )}
               </div>
             ))}
           </div>
-        )}
-        {/* FAQ and Checklist after all questions are answered */}
+        </section>
+
+        {/* Section: FAQ/Checklist/Results */}
         {step === QUESTIONS.length && (
-          <div style={{ marginTop: 10 }}>
+          <section
+            className="regguide-results"
+            style={{
+              width: "100%",
+              maxWidth: 540,
+              margin: "0 auto",
+              background: "#f7fafb",
+              borderRadius: 18,
+              boxShadow: "0 2.5px 12px rgba(170,210,255,0.06)",
+              padding: "28px 18px 18px 22px",
+              marginTop: 24
+            }}
+          >
             {scenarioContent ? (
               <div>
-                {/* Dynamic FAQ Section */}
-                <h3
-                  style={{
-                    fontWeight: 800,
-                    color: "var(--primary)",
-                    fontSize: "1.27rem",
-                    marginBottom: 12,
-                    marginTop: 20,
-                    letterSpacing: 0.05
-                  }}
-                >
-                  Frequently Asked for Your Registration
-                </h3>
+                {/* FAQ Section */}
+                <div style={{
+                  fontSize: "1.03rem",
+                  fontWeight: 800,
+                  color: "var(--primary)",
+                  marginBottom: 14,
+                  letterSpacing: 0.04
+                }}>
+                  Key FAQ for Your Scenario
+                </div>
                 <div>
                   {scenarioContent.faq.map((faqItem, idx) => (
                     <CollapsibleFAQItem key={idx} q={faqItem.q} a={faqItem.a} />
                   ))}
                 </div>
-                {/* Document Checklist */}
-                <h3
-                  style={{
-                    fontWeight: 800,
-                    color: "#164995",
-                    fontSize: "1.13rem",
-                    marginTop: 38,
-                    marginBottom: 10,
-                    letterSpacing: 0.01
-                  }}
-                >
+                {/* Checklist */}
+                <div style={{
+                  fontWeight: 800,
+                  color: "#145b7a",
+                  fontSize: "1.03rem",
+                  marginTop: 32,
+                  marginBottom: 11
+                }}>
                   Document Checklist
-                </h3>
-                <ul style={{ paddingLeft: 0 }}>
+                </div>
+                <ul style={{
+                  listStyle: "none",
+                  paddingLeft: 0,
+                  margin: 0
+                }}>
                   {scenarioContent.checklist.map((item, idx) => (
                     <li
                       key={idx}
                       style={{
                         display: "flex",
                         alignItems: "center",
-                        marginBottom: 9,
-                        fontSize: "1.03rem",
+                        marginBottom: 8,
+                        fontSize: "1.045rem",
                         fontWeight: 500,
-                        gap: 12,
-                        listStyle: "none",
-                        color: "#214368"
+                        color: "#184c60",
+                        gap: 13
                       }}
                     >
-                      <span role="img" aria-label="doc-icon" style={{fontSize: "1.16em"}}>
+                      <span role="img" aria-label="doc-icon" style={{
+                        fontSize: "1.18em"
+                      }}>
                         {item.icon}
                       </span>
                       {item.label}
                     </li>
                   ))}
                 </ul>
-                {/* Issued Documents Summary */}
-                <h3
-                  style={{
-                    fontWeight: 800,
-                    color: "var(--accent)",
-                    fontSize: "1.13rem",
-                    marginTop: 34,
-                    marginBottom: 10,
-                    letterSpacing: 0.01
-                  }}
-                >
-                  What You'll Get
-                </h3>
-                <ul style={{ paddingLeft: 0 }}>
+                {/* Issued Summary */}
+                <div style={{
+                  fontWeight: 800,
+                  color: "var(--accent)",
+                  fontSize: "1.03rem",
+                  marginTop: 28,
+                  marginBottom: 8
+                }}>
+                  What You'll Receive
+                </div>
+                <ul style={{
+                  listStyle: "none",
+                  paddingLeft: 0,
+                  margin: 0
+                }}>
                   {scenarioContent.issued.map((item, idx) => (
                     <li
                       key={idx}
                       style={{
                         display: "flex",
                         alignItems: "center",
-                        marginBottom: 9,
+                        marginBottom: 8,
                         fontSize: "1.025rem",
                         fontWeight: 500,
-                        gap: 12,
-                        listStyle: "none",
-                        color: "#28743f"
-                      }}
-                    >
-                      <span role="img" aria-label="issued-doc" style={{fontSize: "1.16em"}}>
-                        {item.icon}
-                      </span>
+                        color: "#247b42",
+                        gap: 13
+                      }}>
+                      <span role="img" aria-label="issued-doc" style={{
+                        fontSize: "1.15em"
+                      }}>{item.icon}</span>
                       {item.label}
                     </li>
                   ))}
                 </ul>
-                {/* Call to Action / Restart */}
-                <div style={{ textAlign: "center", marginTop: 32 }}>
+                {/* CTA */}
+                <div style={{
+                  display: 'flex', justifyContent: "center", marginTop: 34
+                }}>
                   <button
                     className="btn"
                     style={{
                       background: "var(--accent)",
                       color: "#fff",
                       fontWeight: 700,
-                      padding: "12px 32px",
-                      borderRadius: 7,
+                      padding: "12px 36px",
+                      borderRadius: 9,
                       border: "none"
                     }}
                     onClick={handleRestart}
@@ -385,8 +482,8 @@ function RegGuideFAQ() {
                     background: "var(--primary)",
                     color: "#fff",
                     fontWeight: 700,
-                    padding: "12px 32px",
-                    borderRadius: 7,
+                    padding: "12px 36px",
+                    borderRadius: 9,
                     border: "none"
                   }}
                 >
@@ -394,33 +491,33 @@ function RegGuideFAQ() {
                 </button>
               </div>
             )}
-          </div>
+          </section>
         )}
-      </div>
-      {/* Minimal extra space for white-space look */}
-      <div style={{ height: 36 }} />
+
+        {/* Add a touch of extra whitespace below */}
+        <div style={{ height: 12 }} />
+      </main>
     </div>
   );
 }
 
 /**
- * Collapsible FAQ Item: Small expand/collapse for each FAQ question/answer
- * (Progressive disclosure)
+ * Collapsible FAQ Item, business-style with subtle expansion
+ * PUBLIC_INTERFACE
  */
 function CollapsibleFAQItem({ q, a }) {
   const [open, setOpen] = useState(false);
-  // PUBLIC_INTERFACE
   return (
     <div
       style={{
-        background: open ? "#e8f0fe" : "#fff",
-        borderRadius: 8,
-        marginBottom: 16,
-        boxShadow: "0 1.5px 7px 0 rgba(26, 115, 232, 0.06)",
+        background: open ? "#e8f4fd" : "#fff",
+        borderRadius: 10,
+        marginBottom: 14,
+        boxShadow: "0 1.5px 6px 0 rgba(26, 115, 232, 0.06)",
         border: open
-          ? "1.7px solid var(--primary)"
+          ? "1.6px solid var(--primary)"
           : "1px solid #cddbef",
-        transition: "background 0.13s, border 0.13s"
+        transition: "background 0.17s, border 0.17s"
       }}
     >
       <button
@@ -433,20 +530,20 @@ function CollapsibleFAQItem({ q, a }) {
           textAlign: "left",
           color: "#17417c",
           fontWeight: 600,
-          fontSize: "1.03rem",
-          padding: open ? "13px 22px 8px 16px" : "12px 22px 12px 16px",
+          fontSize: "1.02rem",
+          padding: open ? "14px 22px 8px 17px" : "13px 24px 13px 17px",
           cursor: "pointer",
           display: "flex",
           alignItems: "center",
-          gap: 9,
+          gap: 10,
           outline: "none",
-          borderRadius: 8
+          borderRadius: 10
         }}
       >
         <span
           style={{
-            color: open ? "var(--primary)" : "#b5bfd0",
-            fontSize: "1.03em",
+            color: open ? "var(--primary)" : "#c0d1e6",
+            fontSize: "1.17em",
             marginRight: 1
           }}
         >
@@ -457,13 +554,13 @@ function CollapsibleFAQItem({ q, a }) {
       {open && (
         <div
           style={{
-            color: "#1f364d",
+            color: "#194368",
             background: "#f5fafc",
             borderTop: "1px solid #c5dbfa",
-            fontSize: "1.035rem",
+            fontSize: "1.03rem",
             lineHeight: 1.62,
-            padding: "11px 18px 15px 36px",
-            borderRadius: "0 0 8px 8px"
+            padding: "10px 17px 15px 32px",
+            borderRadius: "0 0 10px 10px"
           }}
         >
           {a}
